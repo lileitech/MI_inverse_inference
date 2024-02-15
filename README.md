@@ -6,7 +6,7 @@ Code for the inverse inference of infarcted area from ECG and MRI for myocardial
 
 ## Notes:<a id="Summary"/>
 1. *Cardiac_Personalisation-SenAnalysis* fold only contain partial code for the ECG simulation and the sensitivity analysis. For the full Eikonal-based ECG simulation code, please contact [Dr Julia Camps](mailto:julia.camps@cs.ox.ac.uk).
-2. *Cobiveco* fold only contrain partial code converting biventicle mesh into cobiveco mesh. For the complete Cobiveco mesh reconstruction code, please visit [KIT-IBE Cobiveco Github repository](https://github.com/KIT-IBT/Cobiveco), which is achieved based on Matlab.
+2. *Cobiveco* fold only contrain partial code for converting biventicle mesh into cobiveco mesh. For the complete Cobiveco mesh reconstruction code, please visit [KIT-IBE Cobiveco Github repository](https://github.com/KIT-IBT/Cobiveco).
 
 ## Package dependencies:<a id="Package dependencies"/>
 This repository is based on PyTorch, running on a computer with 3.50~GHz Intel(R) Xeon(R) E-2146G CPU and an NVIDIA GeForce RTX 3060.
