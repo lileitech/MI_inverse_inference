@@ -56,69 +56,61 @@ def draw_MIsize_boxplot(pre_scar_Dice, pre_BZ_Dice):
     df1 = pd.DataFrame.from_dict(pre_scar_Dice)
     df2 = pd.DataFrame.from_dict(pre_BZ_Dice)
 
-    # 创建一个空的DataFrame，用于存储所有数据
     df = pd.DataFrame(columns=['MIsize', 'Dice', 'Category'])
 
-    # 添加第一类数据，设置Category为'scar'，并调整MIsize的位置
     df1['Category'] = 'Scar'
     df1 = df1.melt(id_vars='Category', var_name='MIsize', value_name='Dice')
-    df1['MIsize'] = df1['MIsize'].astype(str)  # 将子类标签转换为字符串类型
-    # df1['MIsize'] = df1['MIsize'].apply(lambda x: '    ' + x)  # 调整位置，添加空格
+    df1['MIsize'] = df1['MIsize'].astype(str)  
+    # df1['MIsize'] = df1['MIsize'].apply(lambda x: '    ' + x) 
     df = pd.concat([df, df1])
 
-    # 添加第二类数据，设置Category为'BZ'，并调整MIsize的位置
     df2['Category'] = 'BZ'
     df2 = df2.melt(id_vars='Category', var_name='MIsize', value_name='Dice')
-    df2['MIsize'] = df2['MIsize'].astype(str)  # 将子类标签转换为字符串类型
-    # df2['MIsize'] = df2['MIsize'].apply(lambda x: '    ' + x)  # 调整位置，添加空格
+    df2['MIsize'] = df2['MIsize'].astype(str) 
+    # df2['MIsize'] = df2['MIsize'].apply(lambda x: '    ' + x)  
     df = pd.concat([df, df2])
 
     df['MIsize'] = df['MIsize'].map(MIsize_mapping)
     ax = sns.boxplot(data=df, x='Dice', y='MIsize', hue='Category', palette=my_pal_two, linewidth=1, orient="h", saturation=1)
-    ax.invert_yaxis()  # 反转 y 轴坐标
+    ax.invert_yaxis()  
 
     plt.xlabel('Dice score') 
     plt.ylabel('Size of post-MI (radius of scars)')
 
-    # 调整x轴标签的显示角度
     # plt.xticks(rotation=45, ha='right')
 
     plt.savefig("fig_Dice_ApicalMIsize.pdf", format="pdf")
     plt.show()
 
 def draw_MIDice_boxplot(pre_scar_Dice, pre_BZ_Dice, MItype_mapping, MI_extent):
-    # fig, ax = plt.subplots(figsize=(6, 6))  # 调整figsize为你期望的正方形尺寸
-    fig, ax = plt.subplots(figsize=(5, 4))  # 调整figsize为你期望的正方形尺寸
+    # fig, ax = plt.subplots(figsize=(6, 6))  
+    fig, ax = plt.subplots(figsize=(5, 4)) 
 
     df1 = pd.DataFrame.from_dict(pre_scar_Dice)
     df2 = pd.DataFrame.from_dict(pre_BZ_Dice)
 
-    # 创建一个空的DataFrame，用于存储所有数据
     df = pd.DataFrame(columns=['MItype', 'Dice', 'Category'])
 
-    # 添加第一类数据，设置Category为'scar'，并调整MItype的位置
     df1['Category'] = 'Scar'
     df1 = df1.melt(id_vars='Category', var_name='MItype', value_name='Dice')
-    df1['MItype'] = df1['MItype'].astype(str)  # 将子类标签转换为字符串类型
-    # df1['MItype'] = df1['MItype'].apply(lambda x: '    ' + x)  # 调整位置，添加空格
+    df1['MItype'] = df1['MItype'].astype(str)  
+    # df1['MItype'] = df1['MItype'].apply(lambda x: '    ' + x) 
     df = pd.concat([df, df1])
 
-    # 添加第二类数据，设置Category为'BZ'，并调整MItype的位置
     df2['Category'] = 'BZ'
     df2 = df2.melt(id_vars='Category', var_name='MItype', value_name='Dice')
-    df2['MItype'] = df2['MItype'].astype(str)  # 将子类标签转换为字符串类型
-    # df2['MItype'] = df2['MItype'].apply(lambda x: '    ' + x)  # 调整位置，添加空格
+    df2['MItype'] = df2['MItype'].astype(str)  
+    # df2['MItype'] = df2['MItype'].apply(lambda x: '    ' + x) 
     df = pd.concat([df, df2])
 
     df['MItype'] = df['MItype'].map(MItype_mapping)
     ax = sns.boxplot(data=df, x='Dice', y='MItype', hue='Category', palette=my_pal_two, linewidth=1, orient="h", saturation=1)
     ax.set_xlim([-0.05, 1.05])  # Set y-axis limits
-    ax.invert_yaxis()  # 反转 y 轴坐标
+    ax.invert_yaxis()  
 
     plt.ylabel('MI scenario')
     plt.xlabel('Dice score') 
     
-    # 调整x轴标签的显示角度
     # plt.xticks(rotation=45, ha='right')
     plt.savefig('fig_boxplot_Dice_' + MI_extent + '.pdf', format="pdf")
     plt.show()
@@ -141,41 +133,39 @@ def draw_scatterplot_recon(recon, Dice_scar, Dice_BZ, ax):
     return
 
 def draw_MI_AHAscore_boxplot(pre_scar_AHAscore_list_subendo, pre_scar_AHAscore_list_transmu, MItype_mapping, MI_extent):
-    fig, ax = plt.subplots(figsize=(5, 4))  # 调整figsize为你期望的正方形尺寸
-    # fig, ax = plt.subplots(figsize=(6, 6))  # 调整figsize为你期望的正方形尺寸
+    fig, ax = plt.subplots(figsize=(5, 4))  
+    # fig, ax = plt.subplots(figsize=(6, 6))  
 
     df1 = pd.DataFrame.from_dict(pre_scar_AHAscore_list_subendo)
     df2 = pd.DataFrame.from_dict(pre_scar_AHAscore_list_transmu)
 
-    # 创建一个空的DataFrame，用于存储所有数据
     df = pd.DataFrame(columns=['MItype', 'AHA_loc_score', 'Category'])
 
-    # 添加第一类数据，设置Category为'scar'，并调整MItype的位置
     df1['Category'] = 'Subendo'
     df1 = df1.melt(id_vars='Category', var_name='MItype', value_name='AHA_loc_score')
-    df1['MItype'] = df1['MItype'].astype(str)  # 将子类标签转换为字符串类型
+    df1['MItype'] = df1['MItype'].astype(str)  
     df1['MItype'] = df1['MItype'].str.replace('_subendo', '')
-    # df1['MItype'] = df1['MItype'].apply(lambda x: '    ' + x)  # 调整位置，添加空格
+    # df1['MItype'] = df1['MItype'].apply(lambda x: '    ' + x)  
     df = pd.concat([df, df1])
 
-    # 添加第二类数据，设置Category为'BZ'，并调整MItype的位置
+    
     df2['Category'] = 'Transmu'
     df2 = df2.melt(id_vars='Category', var_name='MItype', value_name='AHA_loc_score')
-    df2['MItype'] = df2['MItype'].astype(str)  # 将子类标签转换为字符串类型
+    df2['MItype'] = df2['MItype'].astype(str)  
     df2['MItype'] = df2['MItype'].str.replace('_transmural', '')
-    # df2['MItype'] = df2['MItype'].apply(lambda x: '    ' + x)  # 调整位置，添加空格
+    # df2['MItype'] = df2['MItype'].apply(lambda x: '    ' + x) 
     df = pd.concat([df, df2])
 
     # df['MItype'] = df['MItype'].map(MItype_mapping)
     
     ax = sns.boxplot(data=df, x='AHA_loc_score', y='MItype', hue='Category', palette=my_pal_two_new, linewidth=1, orient="h", saturation=1)
     ax.set_xlim([-0.05, 1.05])  # Set y-axis limits
-    ax.invert_yaxis()  # 反转 y 轴坐标
+    ax.invert_yaxis()  
 
     plt.ylabel('MI scenario')
     plt.xlabel('AHA-loc-score') 
     
-    # 调整x轴标签的显示角度
+    
     # plt.xticks(rotation=45, ha='right')
     plt.savefig('fig_boxplot_AHAscore_' + MI_extent + '.pdf', format="pdf")
     plt.show()

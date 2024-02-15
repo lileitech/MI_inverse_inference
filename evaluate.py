@@ -101,7 +101,7 @@ def evaluate(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--partial_root', type=str, default='E:/OneDrive - Nexus365/PeoPle/Julia_Camps/Big_data_inference/meta_data/UKB_clinical_data/')
+    parser.add_argument('--partial_root', type=str, default='./Big_data_inference/meta_data/UKB_clinical_data/')
     parser.add_argument('--model', type=str, default='log/net_model.pkl') #'log/net_model.pkl'
     parser.add_argument('--in_ch', type=int, default=3+4) # coordinate dimension + label index
     parser.add_argument('--out_ch', type=int, default=3) # scar, BZ, normal

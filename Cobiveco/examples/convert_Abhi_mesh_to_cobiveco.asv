@@ -1,0 +1,61 @@
+addpath('..');
+addpath('../utilities');
+addpath('../utilities/inputPreparation');
+addpath('../functions');
+clear all; clc;
+
+%%% ---------------input preparation----------------
+foldname = 'E:\2022_ECG_inference\Cobiveco-compatible-meshes\';
+foldname_new = 'E:\2022_ECG_inference\dataset_MI_inference\data_cobiveco_mesh\';
+
+
+a=dir([foldname 'vol*']); 
+
+for i=1:numel(a)  
+    % meshName = strrep(strrep(a(i).name, 'vol-', ''), '.mat', '');
+    meshName = '1000037';
+
+    load([foldname 'vol-' meshName '.mat']);
+    sur = vtkDataSetSurfaceFilter(vol);
+    [baseNormal,baseOrigin,~] = cobiveco_estimateBaseNormalAndOrigin(sur);
+    baseShift = -7;
+    baseOrigin = baseOrigin + baseShift*baseNormal;
+    vol = cobiveco_clipBase(vol, baseNormal, baseOrigin);
+    sur = vtkDataSetSurfaceFilter(vol);
+    maxAngle = 40; % max angle of face normals wrt baseNormal for defining the base class
+    numSubdiv = 2; % can help for coarse meshes (interpolation of face normals)
+    [sur,debug] = cobiveco_createClasses(sur, baseNormal, maxAngle, numSubdiv);
+    if isfield(vol.pointData, 'class')
+    
+    newdir=[foldname_new meshName '\'];
+    if ~exist(newdir,'dir')
+        b=['mkdir ' ' ' newdir];
+        system(b); 
+    end
+
+    vtkWrite(sur, [newdir 'heart.vtp']);
+    vtkWrite(vol, [newdir 'heart.vtu']);  
+    
+    %% Create cobiveco object and compute coordinates
+    c = cobiveco(struct('inPrefix',[newdir 'heart'], 'outPrefix',newdir));
+    c.computeAll;
+    
+    
+    oldname= [newdir 'heart.vtp'];
+    newname= strrep(oldname, 'heart', [meshName '_heart_sur']);
+    copyfile(oldname,newname);  
+    delete(oldname)
+    
+    oldname= [newdir 'heart.vtu'];
+    newname= strrep(oldname, 'heart', [meshName '_heart_tet']);
+    copyfile(oldname,newname);  
+    delete(oldname)
+    
+    oldname= [newdir 'result.vtu'];
+    newname= strrep(oldname, 'result', [meshName '_heart_cobiveco']);
+    copyfile(oldname,newname);  
+    delete(oldname)
+
+    delete([newdir 'R.mat'])
+
+end
