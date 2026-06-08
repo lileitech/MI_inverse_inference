@@ -23,7 +23,7 @@ class simulate_QRS_with_scars:
         if verbose:
             print('Initialising QRS simulation')
         # self.geometry = CardiacGeoTet(subject_name, data_dir=data_dir, geometric_data_dir=geometric_data_dir, verbose=True)
-        clinical_ecg_raw_ori = np.genfromtxt(data_dir + geometric_data_dir + subject_name + '/' + subject_name + '_clinical_full_ecg_UKB_raw_8leads.csv', delimiter=',')
+        clinical_ecg_raw_ori = np.genfromtxt(data_dir + geometric_data_dir + subject_name + '/' + subject_name + '_clinical_full_ecg_raw_8leads.csv', delimiter=',')
         clinical_ecg_raw = np.delete(clinical_ecg_raw_ori, 0, axis=1)
         self.propagation_model = EikonalDjikstraTet(data_dir, djikstra_purkinje_max_path_len, geometric_data_dir, nb_continuous_params, purkinje_speed, subject_name, MI_type, verbose)
         self.ecg = PseudoEcgTet(electrode_positions=self.propagation_model.geometry.electrode_positions, frequency=frequency,
@@ -49,8 +49,7 @@ if __name__ == "__main__":
     MI_CV_d_scales = [[0.1, 0.5],[0.01, 0.05]]
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--datapath', type=str, default='E:/OneDrive - Nexus365/Big_data_inference/meta_data/')
-    # parser.add_argument('--datapath', type=str, default='/Users/lei/Library/CloudStorage/OneDrive-Nexus365/Big_data_inference/meta_data/')
+    parser.add_argument('--datapath', type=str, default='./Big_data_inference/meta_data/')
     parser.add_argument('--djikstra_purkinje_max_path_len', type=int, default=400) 
     parser.add_argument('--max_len_qrs', type=int, default=500)
     parser.add_argument('--subject_name', type=str, default='1000268')# 'DTI004_coarse' 
@@ -64,7 +63,7 @@ if __name__ == "__main__":
     verbose = True
     frequency = 1000
     freq_cut = 150
-    geometric_data_dir = 'UKB_clinical_data/' # 'geometric_data/' 
+    geometric_data_dir = 'clinical_data/' # 'geometric_data/' 
     lead_names = ['I', 'II', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
     max_len_qrs = args.max_len_qrs
     max_len_ecg = max_len_qrs
@@ -84,7 +83,7 @@ if __name__ == "__main__":
 
     # subject_list = ['1030660', '1031466', '1032040', '1032124', '1034262', '1035446', '1036193']
 
-    dataPath = args.datapath + 'UKB_clinical_data'
+    dataPath = args.datapath + 'clinical_data'
     datafile = sorted(glob.glob(dataPath + '/1*'))
     for subjectid in range(len(datafile)):
         if subjectid > 0:

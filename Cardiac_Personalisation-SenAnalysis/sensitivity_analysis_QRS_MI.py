@@ -347,8 +347,8 @@ def ECG_rename(ECG_name):
 
 if __name__ == '__main__':
 
-    # datapath = '/Users/lei/Library/CloudStorage/OneDrive-Nexus365/Big_data_inference/meta_data/UKB_clinical_data/'
-    datapath = 'E:/OneDrive - Nexus365/Big_data_inference/meta_data/UKB_clinical_data'
+    # datapath = './Big_data_inference/meta_data/clinical_data/'
+    datapath = './Big_data_inference/meta_data/clinical_data'
     datafile = sorted(glob.glob(datapath + '/1*'))
     QRS_duration_list_all = {}
     poor_R_wave_progression_list_all = {}
